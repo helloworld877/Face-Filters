@@ -21,21 +21,18 @@ color = np.random.randint(0, 255, (100, 3))
 # Take first frame and find corners in it
 ret, old_frame = cap.read()
 old_gray = cv2.cvtColor(old_frame, cv2.COLOR_BGR2GRAY)
-p0 = cv2.goodFeaturesToTrack(old_gray, mask=None,
-                             **feature_params)
 
 # Create a mask image for drawing purposes
 mask = np.zeros_like(old_frame)
 
-while (1):
+def klt(old_frame, new_frame):
 
-    ret, frame = cap.read()
-    frame_gray = cv2.cvtColor(frame,
-                              cv2.COLOR_BGR2GRAY)
-
+    p0 = cv2.goodFeaturesToTrack(old_frame, mask=None,
+                                **feature_params)
+    
     # calculate optical flow
-    p1, st, err = cv2.calcOpticalFlowPyrLK(old_gray,
-                                           frame_gray,
+    p1, st, err = cv2.calcOpticalFlowPyrLK(old_frame,
+                                           new_frame,
                                            p0, None,
                                            **lk_params)
 
@@ -61,8 +58,5 @@ while (1):
         break
 
     # Updating Previous frame and points
-    old_gray = frame_gray.copy()
+    old_frame = new_frame.copy()
     p0 = good_new.reshape(-1, 1, 2)
-
-cv2.destroyAllWindows()
-cap.release()

@@ -1,10 +1,9 @@
 import pathlib
 import cv2
 
-cascade_path = pathlib.Path(cv2.__file__).parent.absolute(
-) / "data/haarcascades/haarcascade_frontalface_default.xml"
+cascade_path = "./data/haarcascades/haarcascade_frontalface_default.xml"
 
-print(cascade_path)
+# print(cascade_path)
 
 # make classifier
 
