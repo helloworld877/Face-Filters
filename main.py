@@ -1,4 +1,5 @@
 import cv2
+import numpy as np
 from viola_jones import viola_jones
 
 def main():
@@ -17,16 +18,20 @@ def main():
     
     camera = cv2.VideoCapture(0)
     while True:
-        _,frame = camera.read()
+        _, frame = camera.read()
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         
         faces = viola_jones(gray)
         
-        for (x, y, width, height) in faces:
-            cv2.rectangle(frame, (x, y), (x+width, y+height), (0, 255, 0), 2)
-            frame[y:y+height, x:x+width, 0] = gray[y:y+height, x:x+width]
-            frame[y:y+height, x:x+width, 1] = gray[y:y+height, x:x+width]
-            frame[y:y+height, x:x+width, 2] = gray[y:y+height, x:x+width]
+        viola_jones_face = np.zeros(gray.shape)
+        
+        (x, y, width, height) = faces[0]
+        # cv2.rectangle(frame, (x, y), (x+width, y+height), (0, 255, 0), 2)
+        viola_jones_face[y:y+height, x:x+width] = gray[y:y+height, x:x+width]
+        
+        feature_points = cv2.goodFeaturesToTrack(viola_jones_face, 200, 0.3, 7)
+        feature_points = np.int0(feature_points) + np.array([x, y])
+        
         
         cv2.imshow("faces", frame)
 
