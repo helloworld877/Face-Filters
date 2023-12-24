@@ -1,5 +1,6 @@
 import numpy as np
 import cv2
+from PIL import Image
 
 
 # Take first frame and find corners in it
@@ -7,10 +8,14 @@ import cv2
 # Create a mask image for drawing purposes
 
 
-def klt(frame_gray,old_gray,p0,lk_params):
+def klt(frame,action_frame,old_gray,p0,lk_params):
     # calculate optical flow
+    if action_frame.shape[0] > old_gray.shape[0] or action_frame.shape[1] > old_gray.shape[1]:
+        action_frame = cv2.resize(action_frame,old_gray.shape) 
+    if action_frame.shape[0] < old_gray.shape[0] or action_frame.shape[1] < old_gray.shape[1]:
+        old_gray = cv2.resize(old_gray,action_frame.shape) 
     p1, st, err = cv2.calcOpticalFlowPyrLK(old_gray,
-                                           frame_gray,
+                                           action_frame,
                                            p0, None,
                                            **lk_params)
 
@@ -22,13 +27,13 @@ def klt(frame_gray,old_gray,p0,lk_params):
     for i, (new, old) in enumerate(zip(good_new, good_old)):
         a, b = new.ravel().astype(int)
         c, d = old.ravel().astype(int)
-        cv2.line(frame_gray, (a, b), (c, d),
+        cv2.line(frame, (a, b), (c, d),
                         (0, 255, 0), 2)
 
-        cv2.circle(frame_gray, (a, b), 5, (0, 0, 255), -1)
+        cv2.circle(frame, (a, b), 5, (0, 0, 255), -1)
 
     # Updating Previous frame and points
-    old_gray = frame_gray.copy()
+    old_gray = action_frame.copy()
     p0 = good_new.reshape(-1, 1, 2)
     
-    return frame_gray
+    return frame

@@ -24,7 +24,12 @@ def main():
     
     camera = cv2.VideoCapture(0)
     _,first_frame = camera.read()
-    first_gray_frame = cv2.cvtColor(first_frame, cv2.COLOR_BGR2GRAY)
+    viola_first_face = viola_jones(first_frame)
+    first_gray = cv2.cvtColor(first_frame, cv2.COLOR_BGR2GRAY)
+    while len(viola_first_face) <= 0:
+        viola_first_face = viola_jones(first_frame)
+    (x_first,y_first,w_first,h_first) = viola_first_face[0]
+    viola_gray_first = first_gray[y_first:y_first+h_first, x_first:x_first+w_first]
     while True:
         _, frame = camera.read()
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
@@ -43,7 +48,7 @@ def main():
             feature_points = np.float32(feature_points) + np.float32(np.array([x, y]))
 
 
-            tracked_frame = klt(gray,first_gray_frame,feature_points,lk_params)
+            tracked_frame = klt(frame,viola_jones_face,viola_gray_first,feature_points,lk_params)
 
         else:
             tracked_frame = frame  # No faces detected, display original frame
