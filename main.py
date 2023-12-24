@@ -26,8 +26,6 @@ def main():
     _,first_frame = camera.read()
     viola_first_face = viola_jones(first_frame)
     first_gray = cv2.cvtColor(first_frame, cv2.COLOR_BGR2GRAY)
-    while len(viola_first_face) <= 0:
-        viola_first_face = viola_jones(first_frame)
     (x_first,y_first,w_first,h_first) = viola_first_face[0]
     viola_gray_first = first_gray[y_first:y_first+h_first, x_first:x_first+w_first]
     while True:
