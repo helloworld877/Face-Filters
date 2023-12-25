@@ -44,23 +44,8 @@ def get_harris_corners(image, k=k):
 
 
 # get camera footage
-camera = cv2.VideoCapture(0)
-while True:
-    _, frame = camera.read()
-    cv2.imshow("faces", frame)
+def get_good_features_to_track(frame):
 
     # Get corners
-    gray_image = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-    corners = get_harris_corners(gray_image, 0.00001)
-    image_out = np.copy(frame)
-    for x, y in corners:
-        x = np.round(x).astype(int)
-        y = np.round(y).astype(int)
-        cv2.circle(image_out, (x, y), radius=3,
-                   color=(0, 255, 0, 255), thickness=-1)
-    cv2.imshow("output", image_out)
-
-    if cv2.waitKey(1) == ord("q"):
-        break
-camera.release()
-cv2.destroyAllWindows()
+    corners = get_harris_corners(frame, 0.00000000001)
+    return corners
