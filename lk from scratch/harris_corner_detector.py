@@ -47,5 +47,5 @@ def get_harris_corners(image, k=k):
 def get_good_features_to_track(frame):
 
     # Get corners
-    corners = get_harris_corners(frame, 0.00000000001)
+    corners = get_harris_corners(frame, 0.0000000000000000001)
     return corners

@@ -6,10 +6,19 @@ from harris_corner_detector import get_good_features_to_track
 from viola_jones import get_faces
 
 
+def get_capture(type=0):
+
+    if (type == 0):
+        return cv2.VideoCapture(0)
+    else:
+        return cv2.VideoCapture("http://192.168.1.102:8080/video")
+
+
 def main():
 
     # get video capture
-    cap = cv2.VideoCapture(0)
+
+    cap = get_capture(0)
     image_width = 0
     image_height = 0
     # parameters
