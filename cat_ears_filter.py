@@ -3,21 +3,21 @@ import numpy as np
 from math import hypot
 
 
-def apply_mustache_filter(frame, landmarks):
+def apply_cat_ears_filter(frame, landmarks):
 
-    mustache_image = cv2.imread("mustache.png", cv2.IMREAD_UNCHANGED)
+    mustache_image = cv2.imread("cats.png", cv2.IMREAD_UNCHANGED)
     rows, cols, _ = frame.shape
 
     mouth_mask = np.zeros((rows, cols), np.uint8)
 
-    left_mouth = (landmarks.part(49).x, landmarks.part(49).y)
-    right_mouth = (landmarks.part(55).x, landmarks.part(55).y)
-    center_mouth = (landmarks.part(63).x, landmarks.part(63).y)
+    left_mouth = (landmarks.part(4).x, landmarks.part(4).y)
+    right_mouth = (landmarks.part(14).x, landmarks.part(14).y)
+    center_mouth = (landmarks.part(28).x, landmarks.part(28).y)
 
     mouth_width = int(
-        hypot(left_mouth[0] - right_mouth[0], left_mouth[1] - right_mouth[1] * 1.7))
+        hypot(left_mouth[0] - right_mouth[0], left_mouth[1] - right_mouth[1] * 1.3))
 
-    mouth_height = int(mouth_width * 0.77)
+    mouth_height = int(mouth_width*1.7)
 
     # New Mouth position
     top_left = (int(center_mouth[0] - mouth_width / 2),

@@ -4,7 +4,8 @@ from math import hypot
 
 
 def apply_glasses_filter(frame, landmarks):
-    glasses_image = cv2.imread("beach_sunglasses.png", cv2.IMREAD_UNCHANGED)
+    glasses_image = cv2.imread(
+        "Glasses-plain.png", cv2.IMREAD_UNCHANGED)
     rows, cols, _ = frame.shape
 
     eyes_mask = np.zeros((rows, cols), np.uint8)
@@ -35,8 +36,8 @@ def apply_glasses_filter(frame, landmarks):
 
     # print(eyes_area.shape)
     final_eyes = np.zeros_like(eyes_area)
-    for i in range(eyes.shape[0]):
-        for j in range(eyes.shape[1]):
+    for i in range(eyes_area.shape[0]):
+        for j in range(eyes_area.shape[1]):
             # area included in filter
             if eyes[i][j][3] > 0:
                 final_eyes[i][j] = eyes[i][j][:3]

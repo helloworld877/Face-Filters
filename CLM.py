@@ -6,6 +6,7 @@ from nose_filter import apply_nose_filter
 from viola_jones import viola_jones
 from glasses_filter import apply_glasses_filter
 from moustache_filter import apply_mustache_filter
+from cat_ears_filter import apply_cat_ears_filter
 
 # Loading Camera and Nose image and Creating mask
 cap = cv2.VideoCapture(0)
@@ -52,7 +53,7 @@ while True:
             # eyes_area, eyes, final_eyes, eyes_coordinates = apply_glasses_filter(
             #     frame, landmarks)
             # moustache filter
-            eyes_area, eyes, final_eyes, eyes_coordinates = apply_mustache_filter(
+            eyes_area, eyes, final_eyes, eyes_coordinates = apply_cat_ears_filter(
                 frame, landmarks)
 
             (top_left, eyes_height, eyes_width) = eyes_coordinates
@@ -80,7 +81,9 @@ while True:
             # # Mustache filter
 
         cv2.imshow("Frame", frame)
+    else:
+        cv2.imshow("Frame", frame)
 
-        key = cv2.waitKey(1)
-        if key == 27:
-            break
+    key = cv2.waitKey(1)
+    if key == 27:
+        break
