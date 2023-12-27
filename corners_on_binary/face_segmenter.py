@@ -13,7 +13,7 @@ print(cascade_path)
 clf = cv2.CascadeClassifier(str(cascade_path))
 
 # defining camera footage
-camera = cv2.VideoCapture(0)
+camera = cv2.VideoCapture("http://192.168.1.29:8080/video")
 
 
 # render loop
