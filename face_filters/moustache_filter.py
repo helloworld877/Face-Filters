@@ -5,7 +5,7 @@ from math import hypot
 
 def apply_mustache_filter(frame, landmarks):
 
-    mustache_image = cv2.imread("mustache.png", cv2.IMREAD_UNCHANGED)
+    mustache_image = cv2.imread("face_filters/mustache.png", cv2.IMREAD_UNCHANGED)
     rows, cols, _ = frame.shape
 
     mouth_mask = np.zeros((rows, cols), np.uint8)
@@ -39,8 +39,6 @@ def apply_mustache_filter(frame, landmarks):
 
     mouth_area = frame[top_left[1]: top_left[1] + mouth_height,
                        top_left[0]: top_left[0] + mouth_width]
-    # mouth_area_no_mouth = cv2.bitwise_and(
-    # mouth_area, mouth_area, mask=mouth_mask)
 
     final_mouth = np.zeros_like(mouth_area)
     for i in range(mouth_area.shape[0]):

@@ -4,14 +4,11 @@ from math import hypot
 
 
 def apply_glasses_filter(frame, landmarks):
-    glasses_image = cv2.imread(
-        "beach_sunglasses.png", cv2.IMREAD_UNCHANGED)
+    glasses_image = cv2.imread("./face_filters/beach_sunglasses.png", cv2.IMREAD_UNCHANGED)
     rows, cols, _ = frame.shape
 
-    eyes_mask = np.zeros((rows, cols), np.uint8)
+    # eyes_mask = np.zeros((rows, cols), np.uint8)
 
-    # top_left_glasses = (landmarks.part(18).x, landmarks.part(18).y)
-    # top_right_glasses = (landmarks.part(27).x, landmarks.part(27).y)
     left_glasses = (landmarks.part(37).x, landmarks.part(37).y)
     right_glasses = (landmarks.part(46).x, landmarks.part(46).y)
     center_glasses = (landmarks.part(28).x, landmarks.part(28).y)
@@ -29,7 +26,7 @@ def apply_glasses_filter(frame, landmarks):
     # print(eyes.shape)
 
     eyes_gray = cv2.cvtColor(eyes, cv2.COLOR_BGR2GRAY)
-    _, eyes_mask = cv2.threshold(eyes_gray, 25, 255, cv2.THRESH_BINARY_INV)
+    # _, eyes_mask = cv2.threshold(eyes_gray, 25, 255, cv2.THRESH_BINARY_INV)
 
     eyes_area = frame[top_left[1]: top_left[1] + glasses_height,
                       top_left[0]: top_left[0] + glasses_width]
@@ -44,11 +41,7 @@ def apply_glasses_filter(frame, landmarks):
             else:
                 final_eyes[i][j] = eyes_area[i][j]
 
-    # eyes_area_no_eyes = cv2.bitwise_and(eyes_area, eyes_area, mask=eyes_mask)
-
-    # final_eyes = np.zeros_like(eyes_area_no_eyes)
-
-    # final_eyes = cv2.add(eyes_area_no_eyes, eyes[:, :, :3])
+    
 
     eyes_coordinates = (top_left, glasses_height, glasses_width)
 

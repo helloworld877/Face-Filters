@@ -3,7 +3,7 @@ import numpy as np
 from math import hypot
 
 def apply_nose_filter(frame, landmarks):
-    nose_image = cv2.imread("clown.png")
+    nose_image = cv2.imread("face_filters/clown.png")
     rows, cols, _ = frame.shape
     nose_mask = np.zeros((rows, cols), np.uint8)
     

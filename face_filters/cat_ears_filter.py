@@ -5,7 +5,7 @@ from math import hypot
 
 def apply_cat_ears_filter(frame, landmarks):
 
-    mustache_image = cv2.imread("cats.png", cv2.IMREAD_UNCHANGED)
+    mustache_image = cv2.imread("face_filters/cats.png", cv2.IMREAD_UNCHANGED)
     rows, cols, _ = frame.shape
 
     mouth_mask = np.zeros((rows, cols), np.uint8)

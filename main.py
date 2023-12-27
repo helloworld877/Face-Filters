@@ -28,6 +28,14 @@ def main():
     first_gray = cv2.cvtColor(first_frame, cv2.COLOR_BGR2GRAY)
     (x_first,y_first,w_first,h_first) = viola_first_face[0]
     viola_gray_first = first_gray[y_first:y_first+h_first, x_first:x_first+w_first]
+    
+    filter_type = input("Select filter: 0) Sunglasses Filter 1) Glasses Filter 2) Clown Filter 3) Cat Filter 4) Mustache Filter")
+    
+    if filter_type not in range(0,5):
+        print("Invalid input")
+        return
+    
+    
     while True:
         _, frame = camera.read()
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
@@ -50,6 +58,7 @@ def main():
 
         else:
             tracked_frame = frame  # No faces detected, display original frame
+        
         
         cv2.imshow('Tracking', tracked_frame)
         # cv2.imshow("faces", frame)
