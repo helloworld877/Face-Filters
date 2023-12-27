@@ -1,30 +1,30 @@
-import cv2 
+import cv2
 import numpy as np
 from math import hypot
 
+
 def apply_mustache_filter(frame, landmarks):
-    
-    mustache_image = cv2.imread("mustache.png")
+
+    mustache_image = cv2.imread("mustache.png", cv2.IMREAD_UNCHANGED)
     rows, cols, _ = frame.shape
-    
+
     mouth_mask = np.zeros((rows, cols), np.uint8)
-    
 
     left_mouth = (landmarks.part(49).x, landmarks.part(49).y)
-    right_mouth =(landmarks.part(55).x, landmarks.part(55).y)
+    right_mouth = (landmarks.part(55).x, landmarks.part(55).y)
     center_mouth = (landmarks.part(63).x, landmarks.part(63).y)
-    
-    
-    mouth_width = int(hypot(left_mouth[0] - right_mouth[0], left_mouth[1]- right_mouth[1] *1.7 ))
-    
+
+    mouth_width = int(
+        hypot(left_mouth[0] - right_mouth[0], left_mouth[1] - right_mouth[1] * 1.7))
+
     mouth_height = int(mouth_width * 0.77)
-    
+
     # New Mouth position
     top_left = (int(center_mouth[0] - mouth_width / 2),
-                            int(center_mouth[1] - mouth_height / 2))
-    
+                int(center_mouth[1] - mouth_height / 2))
+
     mouth = cv2.resize(mustache_image, (mouth_width, mouth_height))
-    
+
     mouth_gray = cv2.cvtColor(mouth, cv2.COLOR_BGR2GRAY)
     _, mouth_mask = cv2.threshold(mouth_gray, 25, 255, cv2.THRESH_BINARY_INV)
 
@@ -38,13 +38,19 @@ def apply_mustache_filter(frame, landmarks):
     mouth_mask = np.uint8(mouth_mask)
 
     mouth_area = frame[top_left[1]: top_left[1] + mouth_height,
-                top_left[0]: top_left[0] + mouth_width]
-    mouth_area_no_mouth = cv2.bitwise_and(mouth_area, mouth_area, mask=mouth_mask)
-    
-    final_mouth = cv2.add(mouth_area_no_mouth, mouth)
-    
-    
-    mouth_coordinates = (top_left, mouth_height, mouth_width)
-    
-    return mouth_area, mouth, final_mouth, mouth_coordinates
+                       top_left[0]: top_left[0] + mouth_width]
+    mouth_area_no_mouth = cv2.bitwise_and(
+        mouth_area, mouth_area, mask=mouth_mask)
 
+    final_mouth = np.zeros_like(mouth_area)
+    for i in range(mouth.shape[0]):
+        for j in range(mouth.shape[1]):
+            # area included in filter
+            if mouth[i][j][3] > 0:
+                final_mouth[i][j] = mouth[i][j][:3]
+            else:
+                final_mouth[i][j] = mouth_area[i][j]
+
+    mouth_coordinates = (top_left, mouth_height, mouth_width)
+
+    return mouth_area, mouth, final_mouth, mouth_coordinates
