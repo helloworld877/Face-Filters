@@ -2,6 +2,10 @@ import dlib
 import numpy as np
 import skimage as io
 
+def mean_squared_error(predicted_landmarks, true_landmarks):
+    error = np.mean(np.square(predicted_landmarks - true_landmarks))
+    return error
+
 def fine_tuning(image_paths, landmark_paths):
     images = []
     landmarks = []
@@ -15,10 +19,6 @@ def fine_tuning(image_paths, landmark_paths):
     predictor = dlib.shape_predictor("./shape_predictor/shape_predictor_68_face_landmarks.dat")
 
     optimizer = dlib.adam_optimizer()
-
-    def mean_squared_error(predicted_landmarks, true_landmarks):
-        error = np.mean(np.square(predicted_landmarks - true_landmarks))
-        return error
 
     for image, true_landmarks in zip(images, landmarks):
         # Predict landmarks using the current model
