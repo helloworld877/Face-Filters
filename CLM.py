@@ -10,6 +10,7 @@ from cat_ears_filter import apply_cat_ears_filter
 
 # Loading Camera and Nose image and Creating mask
 cap = cv2.VideoCapture(0)
+# cap = cv2.VideoCapture("http://192.168.1.29:8080/video")
 nose_image = cv2.imread("clown.png")
 _, frame = cap.read()
 rows, cols, _ = frame.shape
@@ -53,7 +54,7 @@ while True:
             # eyes_area, eyes, final_eyes, eyes_coordinates = apply_glasses_filter(
             #     frame, landmarks)
             # moustache filter
-            eyes_area, eyes, final_eyes, eyes_coordinates = apply_cat_ears_filter(
+            eyes_area, eyes, final_eyes, eyes_coordinates = apply_glasses_filter(
                 frame, landmarks)
 
             (top_left, eyes_height, eyes_width) = eyes_coordinates

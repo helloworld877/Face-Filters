@@ -5,7 +5,7 @@ from math import hypot
 
 def apply_glasses_filter(frame, landmarks):
     glasses_image = cv2.imread(
-        "Glasses-plain.png", cv2.IMREAD_UNCHANGED)
+        "beach_sunglasses.png", cv2.IMREAD_UNCHANGED)
     rows, cols, _ = frame.shape
 
     eyes_mask = np.zeros((rows, cols), np.uint8)
