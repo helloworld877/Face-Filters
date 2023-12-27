@@ -39,8 +39,8 @@ def apply_mustache_filter(frame, landmarks):
 
     mouth_area = frame[top_left[1]: top_left[1] + mouth_height,
                        top_left[0]: top_left[0] + mouth_width]
-    mouth_area_no_mouth = cv2.bitwise_and(
-        mouth_area, mouth_area, mask=mouth_mask)
+    # mouth_area_no_mouth = cv2.bitwise_and(
+    # mouth_area, mouth_area, mask=mouth_mask)
 
     final_mouth = np.zeros_like(mouth_area)
     for i in range(mouth.shape[0]):

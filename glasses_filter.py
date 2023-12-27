@@ -43,7 +43,7 @@ def apply_glasses_filter(frame, landmarks):
             else:
                 final_eyes[i][j] = eyes_area[i][j]
 
-    eyes_area_no_eyes = cv2.bitwise_and(eyes_area, eyes_area, mask=eyes_mask)
+    # eyes_area_no_eyes = cv2.bitwise_and(eyes_area, eyes_area, mask=eyes_mask)
 
     # final_eyes = np.zeros_like(eyes_area_no_eyes)
 
