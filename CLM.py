@@ -18,7 +18,7 @@ nose_mask = np.zeros((rows, cols), np.uint8)
 # Loading Face detector
 detector = dlib.get_frontal_face_detector()
 
-predictor = dlib.shape_predictor("shape_predictor_68_face_landmarks.dat")
+predictor = dlib.shape_predictor("./shape_predictor/shape_predictor_68_face_landmarks.dat")
 
 filter_type = 3
 
