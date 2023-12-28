@@ -6,9 +6,8 @@ from harris_corner_detector import get_good_features_to_track
 
 def get_corners_on_face(frame):
 
-    cascade_path = pathlib.Path(cv2.__file__).parent.absolute(
-    ) / "data/haarcascades/haarcascade_frontalface_default.xml"
-    print(str(cascade_path))
+    cascade_path = "data/haarcascades/haarcascade_frontalface_default.xml"
+    # print(str(cascade_path))
     # make classifier
 
     clf = cv2.CascadeClassifier(str(cascade_path))
