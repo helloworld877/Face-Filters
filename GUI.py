@@ -27,24 +27,25 @@ root = tk.Tk()
 selected_filter = tk.StringVar()
 
 # Create a canvas for displaying the webcam feed
-canvas = tk.Canvas(root, width=640, height=480)
-canvas.grid(row=1, column=0, padx=10, pady=10)
+canvas = tk.Canvas(root, width=400, height=100)
+canvas.grid(row=0, column=0, padx=10, pady=10, rowspan=5)  # Use rowspan to make the canvas span multiple rows
 
-# Create buttons
+# Center the canvas in the window
+root.grid_rowconfigure(0, weight=1)
+root.grid_columnconfigure(0, weight=1)
+
+# Create buttons and center them in the canvas
 button1 = tk.Button(root, text="Sunglasses", command=lambda: select_filter("Sunglasses"))
-button1.grid(row=100, column=0, padx=10, pady=5)
+button1.grid(row=1, column=0, padx=10, pady=5, sticky='nsew')
 
 button2 = tk.Button(root, text="Clown", command=lambda: select_filter("Clown"))
-button2.grid(row=200, column=0, padx=10, pady=5)
+button2.grid(row=2, column=0, padx=10, pady=5, sticky='nsew')
 
 button3 = tk.Button(root, text="Cats", command=lambda: select_filter("Cats"))
-button3.grid(row=300, column=0, padx=10, pady=5)
+button3.grid(row=3, column=0, padx=10, pady=5, sticky='nsew')
 
 button4 = tk.Button(root, text="Mustache", command=lambda: select_filter("Mustache"))
-button4.grid(row=400, column=0, padx=10, pady=5)
+button4.grid(row=4, column=0, padx=10, pady=5, sticky='nsew')
 
 # Run the GUI event loop
 root.mainloop()
-
-
-
