@@ -32,15 +32,13 @@ while True:
                 
                 closest_corner = min(corners, key=lambda c: sqrt((c[0]- l.x)**2 + (c[1]-l.y)**2))
                 filtered_corners.append(closest_corner)
-                # corners.remove(closest_corner)
-                if len(filtered_corners) == 68:
-                    break
-                
+
             updated_clm_points = []
             for i, clm_point in enumerate(landmarks.parts()):
                 updated_x = 0.5 * clm_point.x + 0.5 * filtered_corners[i][0]
                 updated_y = 0.5 * clm_point.y + 0.5 * filtered_corners[i][1]
                 updated_clm_points.append((updated_x, updated_y))
+                
 
             for n in range(len(updated_clm_points)):
                 x = updated_clm_points[n][0]
