@@ -35,8 +35,8 @@ while True:
 
             updated_clm_points = []
             for i, clm_point in enumerate(landmarks.parts()):
-                updated_x = 0.5 * clm_point.x + 0.5 * filtered_corners[i][0]
-                updated_y = 0.5 * clm_point.y + 0.5 * filtered_corners[i][1]
+                updated_x = 0.9 * clm_point.x + 0.1 * filtered_corners[i][0]
+                updated_y = 0.9 * clm_point.y + 0.1 * filtered_corners[i][1]
                 updated_clm_points.append((updated_x, updated_y))
                 
 
