@@ -8,7 +8,7 @@ def get_corners_on_face(frame):
 
     cascade_path = pathlib.Path(cv2.__file__).parent.absolute(
     ) / "data/haarcascades/haarcascade_frontalface_default.xml"
-
+    print(str(cascade_path))
     # make classifier
 
     clf = cv2.CascadeClassifier(str(cascade_path))
