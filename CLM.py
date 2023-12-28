@@ -15,12 +15,19 @@ _, frame = cap.read()
 rows, cols, _ = frame.shape
 nose_mask = np.zeros((rows, cols), np.uint8)
 
-# Loading Face detector
+# if you want to implement viola jones, uncomment the below lines (31, 36, 37)
 detector = dlib.get_frontal_face_detector()
 
 predictor = dlib.shape_predictor("./shape_predictor/shape_predictor_68_face_landmarks.dat")
 
 filter_type = 3
+
+filter_type = int(input("Select filter: 0) Sunglasses Filter 1) Clown Filter 2) Cat Filter 3) Mustache Filter: "))
+
+while filter_type not in range(0,4):
+    print("Invalid input")
+    filter_type = int(input("Select filter: 0) Sunglasses Filter 1) Clown Filter 2) Cat Filter 3) Mustache Filter: "))
+
 
 while True:
     
@@ -28,13 +35,13 @@ while True:
     nose_mask.fill(0)
     gray_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
-    # faces_viola = viola_jones(frame)
-    faces_viola = detector(frame)
+    faces_viola = viola_jones(frame)
+    # faces_viola = detector(frame)
 
     if len(faces_viola) != 0:
         for face in faces_viola:
-            # (x,y,w,h) = face
-            # face = dlib.rectangle(int(x), int(y), int(x+w), int(y+h))
+            (x,y,w,h) = face
+            face = dlib.rectangle(int(x), int(y), int(x+w), int(y+h))
 
             landmarks = predictor(gray_frame, face)
             
@@ -53,8 +60,7 @@ while True:
 
             (top_left, height, width) = coordinates
             frame[top_left[1]: top_left[1] + height, top_left[0]: top_left[0] + width] = final
-            
-            
+
 
         cv2.imshow("Frame", frame)
     else:
